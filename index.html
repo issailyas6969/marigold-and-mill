@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marigold &amp; Mill — Coffee Bar &amp; Bakery on Ostler Lane</title>
+<meta name="description" content="A twelve-seat coffee bar and bakery in Ashby Green. Small-batch roasting, bread baked at 5am, open seven days.">
+<meta name="theme-color" content="#fbf7f1" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14100d" media="(prefers-color-scheme: dark)">
+<style>
+  :root{
+    --bg:#fbf7f1; --surface:#ffffff; --surface-2:#f3ece2;
+    --text:#211a15; --muted:#6b5d51;
+    --accent:#a84e2a; --accent-soft:#f2e0d4; --ok:#2e7d5b;
+    --border:#e6dcce; --radius:14px;
+    --shadow:0 1px 2px rgba(33,26,21,.05), 0 10px 28px -14px rgba(33,26,21,.22);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#14100d; --surface:#1c1713; --surface-2:#241d18;
+      --text:#f5ede4; --muted:#a8998a;
+      --accent:#e08a54; --accent-soft:#33231a; --ok:#4cc08a;
+      --border:#302722;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 14px 34px -16px rgba(0,0,0,.75);
+    }
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--bg);color:var(--text);
+    font:16px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit}
+  .wrap{width:min(100% - 40px, 1000px);margin-inline:auto}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+  /* header */
+  .site-head{position:sticky;top:0;z-index:20;background:color-mix(in srgb, var(--bg) 86%, transparent);
+    backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+  .head-inner{display:flex;align-items:center;gap:16px;padding-block:12px}
+  .brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-weight:650;
+    letter-spacing:-.02em;font-size:16px;margin-right:auto}
+  .brand svg{color:var(--accent);flex:none}
+  .brand small{display:block;font-size:11px;font-weight:500;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--muted);line-height:1.2}
+  .nav{display:flex;gap:4px}
+  .nav a{padding:8px 12px;border-radius:999px;text-decoration:none;font-size:14px;
+    font-weight:550;color:var(--muted);transition:color .15s,background .15s}
+  .nav a:hover{color:var(--text);background:var(--surface-2)}
+  @media (max-width:680px){.nav{display:none}}
+
+  /* buttons */
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:999px;
+    font:inherit;font-size:14px;font-weight:600;text-decoration:none;border:1px solid transparent;
+    cursor:pointer;transition:transform .15s,box-shadow .15s,background .15s,border-color .15s}
+  .btn-primary{background:var(--accent);color:#fff;box-shadow:var(--shadow)}
+  .btn-primary:hover{transform:translateY(-1px);box-shadow:0 12px 26px -12px rgba(168,78,42,.65)}
+  .btn-primary:active{transform:translateY(0) scale(.98)}
+  .btn-ghost{background:transparent;border-color:var(--border);color:var(--text)}
+  .btn-ghost:hover{background:var(--surface-2);border-color:var(--muted)}
+  .btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+
+  /* hero */
+  .hero{position:relative;z-index:0;padding-block:64px 56px}
+  .hero::before{content:"";position:absolute;z-index:-1;left:-15%;right:-15%;top:-220px;height:560px;
+    background:radial-gradient(52% 60% at 22% 0%, var(--accent-soft), transparent 72%);pointer-events:none}
+  .hero-grid{display:grid;gap:40px}
+  @media (min-width:860px){.hero-grid{grid-template-columns:1.45fr .9fr;align-items:start;gap:56px}}
+  .eyebrow{margin:0;font-size:12px;font-weight:650;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+  h1{margin:14px 0 0;font-size:clamp(2.1rem,6vw,3.4rem);line-height:1.04;letter-spacing:-.035em;font-weight:700}
+  h1 em{font-family:Georgia,"Times New Roman",serif;font-style:italic;color:var(--accent);letter-spacing:-.02em}
+  .lede{margin:20px 0 0;max-width:48ch;font-size:17px;color:var(--muted)}
+  .cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+  .status{display:inline-flex;align-items:center;gap:8px;margin:24px 0 0;
+    font-size:13px;font-weight:550;color:var(--muted)}
+  .status::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--muted);flex:none}
+  .status.is-open{color:var(--text)}
+  .status.is-open::before{background:var(--ok);box-shadow:0 0 0 4px color-mix(in srgb,var(--ok) 18%,transparent)}
+
+  /* cards */
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+    padding:24px;box-shadow:var(--shadow)}
+  .card h3{margin:0;font-size:13px;font-weight:650;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .hours{list-style:none;margin:16px 0 0;padding:0}
+  .hours li{display:flex;justify-content:space-between;gap:12px;padding:9px 0;font-size:14px;
+    border-bottom:1px dashed var(--border)}
+  .hours li:last-child{border-bottom:0;padding-bottom:0}
+  .hours span:last-child{font-variant-numeric:tabular-nums;color:var(--muted)}
+  .note{margin:16px 0 0;font-size:13px;color:var(--muted);line-height:1.55}
+
+  /* sections */
+  .section{padding-block:64px;border-top:1px solid var(--border)}
+  @media (min-width:760px){.section{padding-block:88px}}
+  .sec-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;
+    gap:20px;margin-bottom:32px}
+  h2{margin:0;font-size:clamp(1.5rem,3.4vw,2rem);line-height:1.15;letter-spacing:-.025em}
+  .sec-head p{margin:8px 0 0;max-width:46ch;font-size:15px;color:var(--muted)}
+
+  /* tabs */
+  .tabs{display:inline-flex;gap:4px;padding:4px;background:var(--surface-2);
+    border:1px solid var(--border);border-radius:999px}
+  .tab{border:0;background:transparent;font:inherit;font-size:14px;font-weight:600;
+    color:var(--muted);padding:8px 16px;border-radius:999px;cursor:pointer;transition:.15s}
+  .tab:hover{color:var(--text)}
+  .tab[aria-selected="true"]{background:var(--surface);color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,.1)}
+
+  /* menu */
+  .menu{list-style:none;margin:0;padding:0}
+  .menu li{display:grid;grid-template-columns:1fr auto;gap:2px 20px;
+    padding-block:16px;border-bottom:1px solid var(--border)}
+  .menu li:last-child{border-bottom:0;padding-bottom:0}
+  .menu .name{font-weight:600;font-size:15px}
+  .menu .price{font-weight:600;font-size:15px;color:var(--accent);font-variant-numeric:tabular-nums}
+  .menu .desc{grid-column:1/-1;margin:0;font-size:14px;color:var(--muted);line-height:1.5}
+  @media (min-width:720px){.menu{display:grid;grid-template-columns:1fr 1fr;gap:0 48px}}
+
+  /* story */
+  .story-grid{display:grid;gap:32px}
+  @media (min-width:860px){.story-grid{grid-template-columns:1.25fr .75fr;gap:56px}}
+  .story p{margin:0 0 16px;color:var(--muted);font-size:16px;max-width:60ch}
+  .story p:first-of-type{font-size:18px;color:var(--text)}
+  .stats{display:grid;gap:12px}
+  .stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px}
+  .stat b{display:block;font-size:26px;letter-spacing:-.03em;line-height:1.2}
+  .stat span{font-size:13px;color:var(--muted)}
+
+  /* visit */
+  .visit-grid{display:grid;gap:16px}
+  @media (min-width:720px){.visit-grid{grid-template-columns:repeat(3,1fr)}}
+  .visit-grid .card h3{margin-bottom:12px}
+  .visit-grid .card p{margin:0 0 10px;font-size:14px;color:var(--muted);line-height:1.6}
+  .visit-grid .card p strong{color:var(--text);font-weight:600}
+  .visit-grid a{color:var(--accent);text-decoration:none;font-weight:550;border-bottom:1px solid transparent}
+  .visit-grid a:hover{border-bottom-color:var(--accent)}
+
+  /* footer */
+  .site-foot{border-top:1px solid var(--border);padding-block:32px;font-size:13px;color:var(--muted)}
+  .foot-inner{display:flex;flex-wrap:wrap;gap:12px 24px;justify-content:space-between;align-items:center}
+  .foot-inner p{margin:0}
+
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *{transition:none!important;animation:none!important}
+  }
+</style>
+</head>
+<body id="top">
+
+<header class="site-head">
+  <div class="wrap head-inner">
+    <a class="brand" href="#top">
+      <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true" fill="none">
+        <circle cx="12" cy="12" r="4.1" fill="currentColor"/>
+        <g stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+          <path d="M12 2.4v3.1M12 18.5v3.1M2.4 12h3.1M18.5 12h3.1M5.4 5.4l2.2 2.2M16.4 16.4l2.2 2.2M18.6 5.4l-2.2 2.2M7.6 16.4l-2.2 2.2"/>
+        </g>
+      </svg>
+      <span>Marigold &amp; Mill<small>Coffee bar &amp; bakery</small></span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#menu">Menu</a>
+      <a href="#story">Our story</a>
+      <a href="#visit">Visit</a>
+    </nav>
+    <a class="btn btn-primary" href="#visit">Order ahead</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero wrap">
+    <div class="hero-grid">
+      <div>
+        <p class="eyebrow">Ostler Lane · Ashby Green · since 2016</p>
+        <h1>Slow mornings and <em>proper</em> coffee.</h1>
+        <p class="lede">We roast in small batches behind the counter and bake at five in the morning. Twelve seats, one long bench outside, and no queue that can’t wait ninety seconds.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#menu">See the menu</a>
+          <a class="btn btn-ghost" href="#visit">Find the shop</a>
+        </div>
+        <p class="status" id="status">Checking the opening hours…</p>
+      </div>
+
+      <aside class="card" aria-labelledby="hours-title">
+        <h3 id="hours-title">Opening hours</h3>
+        <ul class="hours">
+          <li><span>Monday – Friday</span><span>7:00 – 16:00</span></li>
+          <li><span>Saturday</span><span>8:00 – 16:00</span></li>
+          <li><span>Sunday</span><span>9:00 – 15:00</span></li>
+        </ul>
+        <p class="note">The kitchen board closes thirty minutes before we do. Bread sells out most Saturdays by eleven.</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section wrap" id="menu">
+    <div class="sec-head">
+      <div>
+        <h2>What we’re serving</h2>
+        <p>The espresso list stays put all year. The kitchen board changes weekly with whatever the market has.</p>
+      </div>
+      <div class="tabs" role="tablist" aria-label="Menu sections">
+        <button class="tab" role="tab" id="tab-coffee" aria-controls="panel-coffee" aria-selected="true" tabindex="0">Coffee</button>
+        <button class="tab" role="tab" id="tab-kitchen" aria-controls="panel-kitchen" aria-selected="false" tabindex="-1">Kitchen</button>
+        <button class="tab" role="tab" id="tab-bakery" aria-controls="panel-bakery" aria-selected="false" tabindex="-1">Bakery</button>
+      </div>
+    </div>
+
+    <div role="tabpanel" id="panel-coffee" aria-labelledby="tab-coffee">
+      <ul class="menu">
+        <li><span class="name">Filter coffee</span><span class="price">£3.50</span><p class="desc">This week: Finca La Guaca, Huila. Bright plum, cocoa nib, long finish.</p></li>
+        <li><span class="name">Flat white</span><span class="price">£4.20</span><p class="desc">Two ristretto shots and silky whole milk from Wrenfield Dairy.</p></li>
+        <li><span class="name">Cortado</span><span class="price">£3.80</span><p class="desc">Equal parts espresso and steamed milk. Our regulars’ default.</p></li>
+        <li><span class="name">Cold brew</span><span class="price">£4.50</span><p class="desc">Eighteen-hour steep, served over one big rock. No sugar unless you ask.</p></li>
+        <li><span class="name">Mocha</span><span class="price">£4.80</span><p class="desc">70% dark ganache stirred into the shot before the milk goes in.</p></li>
+        <li><span class="name">House chai</span><span class="price">£4.40</span><p class="desc">Cardamom, ginger and black pepper, ground here every Tuesday.</p></li>
+      </ul>
+    </div>
+
+    <div role="tabpanel" id="panel-kitchen" aria-labelledby="tab-kitchen" hidden>
+      <ul class="menu">
+        <li><span class="name">Egg &amp; chive brioche</span><span class="price">£8.50</span><p class="desc">Soft scramble, chives, a lot of butter. Served until 14:00.</p></li>
+        <li><span class="name">Mushroom toast</span><span class="price">£11.00</span><p class="desc">Chestnut mushrooms, thyme, ricotta, on Ostler Mill sourdough.</p></li>
+        <li><span class="name">Green bowl</span><span class="price">£12.50</span><p class="desc">Barley, kale, preserved lemon, toasted seeds, soft herbs.</p></li>
+        <li><span class="name">Soup of the day</span><span class="price">£7.50</span><p class="desc">Ask at the counter. Always comes with the heel of the loaf.</p></li>
+        <li><span class="name">Ham &amp; gruyère croissant</span><span class="price">£7.20</span><p class="desc">Pressed until the cheese leaks. Worth the napkin.</p></li>
+      </ul>
+    </div>
+
+    <div role="tabpanel" id="panel-bakery" aria-labelledby="tab-bakery" hidden>
+      <ul class="menu">
+        <li><span class="name">Butter croissant</span><span class="price">£3.80</span><p class="desc">Laminated over three days. Best before ten, honestly.</p></li>
+        <li><span class="name">Cardamom bun</span><span class="price">£4.40</span><p class="desc">Knotted by hand, twice proved, rolled in crushed cardamom.</p></li>
+        <li><span class="name">Lemon polenta cake</span><span class="price">£4.80</span><p class="desc">Gluten-free, soaked in lemon syrup while it’s still warm.</p></li>
+        <li><span class="name">Sourdough loaf</span><span class="price">£7.00</span><p class="desc">Friday to Sunday only. Reserve one by phone before 9am.</p></li>
+        <li><span class="name">Salted brownie</span><span class="price">£3.60</span><p class="desc">Fudged in the middle, cracked on top, sea salt to finish.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section wrap story" id="story">
+    <div class="story-grid">
+      <div>
+        <h2>A small room with a long memory</h2>
+        <div style="height:24px"></div>
+        <p>Marigold &amp; Mill opened in 2016 in a former hardware shop. We kept the tin ceiling, the original counter, and the faint smell of sawdust in the back room that nobody has managed to shift.</p>
+        <p>Nadia runs the roaster — a 5kg drum she has had since the beginning. She buys green coffee from three farms she visits each year: Finca La Guaca in Huila, a smallholder co-op in Yirgacheffe, and a family plot above Antigua.</p>
+        <p>Everything else comes from within forty miles. Milk from Wrenfield Dairy, flour from Ostler Mill, eggs from the Saturday market, and whichever grower turned up with too many courgettes.</p>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>2016</b><span>The year we unlocked the door</span></div>
+        <div class="stat"><b>3</b><span>Farms we buy green coffee from</span></div>
+        <div class="stat"><b>12</b><span>Seats inside, plus the bench</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section wrap" id="visit">
+    <div class="sec-head">
+      <div>
+        <h2>Come and sit down</h2>
+        <p>No bookings for the main room — just turn up. The back room seats eight and can be reserved.</p>
+      </div>
+    </div>
+    <div class="visit-grid">
+      <div class="card">
+        <h3>The shop</h3>
+        <p><strong>42 Ostler Lane</strong><br>Ashby Green, AB4 2LN</p>
+        <p>Two minutes from the library, opposite the old fountain. Step-free entrance and a loo you don’t need a key for.</p>
+      </div>
+      <div class="card">
+        <h3>Get in touch</h3>
+        <p><a href="tel:+441632480118">01632 480 118</a><br><a href="mailto:hello@marigoldandmill.co.uk">hello@marigoldandmill.co.uk</a></p>
+        <p>For the back room, email at least a week ahead and tell us how many chairs you need.</p>
+      </div>
+      <div class="card">
+        <h3>Ordering ahead</h3>
+        <p>Call before 9am and we’ll have filter coffee and pastries boxed and waiting on the counter.</p>
+        <p>Whole loaves are Friday to Sunday only, and they go quickly.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap foot-inner">
+    <p>© 2025 Marigold &amp; Mill · 42 Ostler Lane, Ashby Green</p>
+    <p>Roasted here · Baked here · Closed on nobody’s birthday</p>
+  </div>
+</footer>
+
+<script>
+  // Menu tabs
+  (function () {
+    var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
+    var panels = Array.prototype.slice.call(document.querySelectorAll('[role="tabpanel"]'));
+
+    function select(tab) {
+      tabs.forEach(function (t) {
+        var on = t === tab;
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        t.tabIndex = on ? 0 : -1;
+      });
+      panels.forEach(function (p) {
+        p.hidden = p.id !== tab.getAttribute('aria-controls');
+      });
+    }
+
+    tabs.forEach(function (tab, i) {
+      tab.addEventListener('click', function () { select(tab); });
+      tab.addEventListener('keydown', function (e) {
+        var next = null;
+        if (e.key === 'ArrowRight') next = tabs[(i + 1) % tabs.length];
+        if (e.key === 'ArrowLeft') next = tabs[(i - 1 + tabs.length) % tabs.length];
+        if (next) { e.preventDefault(); select(next); next.focus(); }
+      });
+    });
+  })();
+
+  // Open / closed indicator, local time
+  (function () {
+    var el = document.getElementById('status');
+    if (!el) return;
+
+    // [openMinutes, closeMinutes] indexed 0 = Sunday
+    var schedule = [
+      [540, 900], [420, 960], [420, 960], [420, 960],
+      [420, 960], [420, 960], [480, 960]
+    ];
+
+    function fmt(m) {
+      var h = Math.floor(m / 60);
+      var mm = m % 60;
+      var ap = h >= 12 ? 'pm' : 'am';
+      var hh = h % 12 === 0 ? 12 : h % 12;
+      return hh + (mm ? ':' + (mm < 10 ? '0' + mm : mm) : '') + ap;
+    }
+
+    var now = new Date();
+    var day = now.getDay();
+    var mins = now.getHours() * 60 + now.getMinutes();
+    var open = schedule[day][0];
+    var close = schedule[day][1];
+    var text;
+    var isOpen = false;
+
+    if (mins >= open && mins < close) {
+      text = 'Open now — pouring until ' + fmt(close);
+      isOpen = true;
+    } else if (mins < open) {
+      text = 'Closed — we open at ' + fmt(open);
+    } else {
+      text = 'Closed — back tomorrow at ' + fmt(schedule[(day + 1) % 7][0]);
+    }
+
+    el.textContent = text;
+    el.classList.toggle('is-open', isOpen);
+  })();
+</script>
+</body>
+</html>
